@@ -1,0 +1,47 @@
+ <div class="cart-container">
+
+   <div *ngIf="cartList.length === 0; else elseBlock">
+     <h1 class="empty-cart-message">Empty card</h1>
+   </div>
+
+   <ng-template #elseBlock>
+     <div class="cart-panel">
+       <div *ngFor="let element of cartList; let i = index">
+         <div class="cart-item">
+
+           <img class="img" src={{element.url}}>
+
+           <div class="cart-item-details">
+             <span class="cart-item bold-text">{{element.name}}</span>
+             <span class="cart-item">{{element.price}}</span>
+
+             <div class="column">
+               <label>Amount:</label>
+               <input class="number-input" type="number" required [(ngModel)]="cartList[i].quantity"
+                 (input)="changeQuantity(quantity.value,cartList[i])" #quantity>
+             </div>
+           </div>
+         </div>
+       </div>
+       <h3>Total: ${{total}}</h3>
+     </div>
+     <form class="form-margin" #form="ngForm" (ngSubmit)="submitForm()">
+       <label for="Full name">Full name:</label>
+       <br>
+       <input class="form-control" type="text" required name="Full name" minlength="3"
+         placeholder="(minimum 3 characters)" [(ngModel)]="fullName">
+       <br>
+       <label for="Address">Address:</label>
+       <br>
+       <input class="form-control" type="text" required name="Address" minlength="6"
+         placeholder="(minimum 6 characters)" [(ngModel)]="address">
+       <br><label for="Credit card number">Credit card number:</label><br>
+       <input class="form-control" type="string" required name="Credit card number" minlength="16"
+         placeholder="(16-digit number)" [(ngModel)]="creditCardNumber">
+       <br>
+       <small class="text-muted">We'll never share your payment details with anyone else.</small>
+       <br>
+       <input type="submit" name="Submit" [disabled]="form.invalid" class="btn btn-primary">
+     </form>
+   </ng-template>
+ </div>
