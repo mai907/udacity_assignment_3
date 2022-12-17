@@ -1,5 +1,4 @@
  <div class="cart-container">
-
    <div *ngIf="cartList.length === 0; else elseBlock">
      <h1 class="empty-cart-message">Empty card</h1>
    </div>
@@ -18,7 +17,7 @@
              <div class="column">
                <label>Amount:</label>
                <input class="number-input" type="number" required [(ngModel)]="cartList[i].quantity"
-                 (input)="changeQuantity(quantity.value,cartList[i])" #quantity>
+                 (ngModelChange)="changeQuantity(quantity.value,cartList[i])" #quantity>
              </div>
            </div>
          </div>
@@ -28,20 +27,32 @@
      <form class="form-margin" #form="ngForm" (ngSubmit)="submitForm()">
        <label for="Full name">Full name:</label>
        <br>
-       <input class="form-control" type="text" required name="Full name" minlength="3"
-         placeholder="(minimum 3 characters)" [(ngModel)]="fullName">
+       <input class="form-control" type="text" required name="Fullname" minlength="3"
+         placeholder="(minimum 3 characters)" [(ngModel)]="fullName" #fullname="ngModel">
+       <small *ngIf="fullname.errors?.['minlength']" style="color:red">
+         Full name must be at least minimum 3 characters.
+       </small>
        <br>
        <label for="Address">Address:</label>
        <br>
        <input class="form-control" type="text" required name="Address" minlength="6"
-         placeholder="(minimum 6 characters)" [(ngModel)]="address">
-       <br><label for="Credit card number">Credit card number:</label><br>
-       <input class="form-control" type="string" required name="Credit card number" minlength="16"
-         placeholder="(16-digit number)" [(ngModel)]="creditCardNumber">
+         placeholder="(minimum 6 characters)" [(ngModel)]="address" #addrs="ngModel">
+       <small *ngIf="addrs.errors?.['minlength']" style="color:red">
+         Full name must be at least 6 characters.
+       </small>
+       <br>
+       <label for="Credit card number">Credit card number:</label><br>
+       <input class="form-control" type="text" required name="Credit card number" id="credit" maxlength="16"
+         minlength="16" placeholder="(16-digit number)" ngModel #creditNumber="ngModel">
+       <small *ngIf="creditNumber.hasError('minlength')" style="color:red">
+         Credit card number must be 16-digit number.
+       </small>
        <br>
        <small class="text-muted">We'll never share your payment details with anyone else.</small>
        <br>
        <input type="submit" name="Submit" [disabled]="form.invalid" class="btn btn-primary">
      </form>
+
+
    </ng-template>
  </div>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {Product} from '../models/Product'
-import {CartService} from "../services/cart.service"
+import {CartElemnt} from '../models/Cart'
 
 @Component({
   selector: 'app-product-item',
@@ -9,8 +9,10 @@ import {CartService} from "../services/cart.service"
 })
 export class ProductItemComponent {
   @Input() product: Product
+  @Output() addToCart: EventEmitter<CartElemnt> = new EventEmitter;
+
   quantity?:number = 1
-  constructor(private cartService:CartService){
+  constructor(){
     this.product={
       id :1,
       name:"",
@@ -19,11 +21,9 @@ export class ProductItemComponent {
       url:""
     }
   }
-  addToCart(pordect:Product):void{
-    this.cartService.addToCartList({...pordect,quantity:Number(this.quantity!)})
-    // console.log("this.cartService",this.cartService.getCartList())
-    // console.log("getTotal",this.cartService.getTotal())
 
+  addtoCart(pordect:Product):void {
+    this.addToCart.emit({...pordect,quantity:Number(this.quantity!)});
   }
 
 }

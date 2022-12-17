@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 import {Product} from "../models/Product"
 import { CartService } from '../services/cart.service';
@@ -18,6 +18,7 @@ export class ProductItemDetailComponent {
   }
   quantity?:number = 1
   router: any;
+
   constructor(private route: Router,
     private cartService:CartService) { 
     const navigation = this.route.getCurrentNavigation();
@@ -32,6 +33,6 @@ export class ProductItemDetailComponent {
 
   addToCart(pordect:Product):void{
     this.cartService.addToCartList({...pordect,quantity:Number(this.quantity!)})
-
   }
+  
 }
